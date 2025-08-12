@@ -16,3 +16,27 @@ Este proyecto utiliza varios paquetes de Maven para facilitar las pruebas BDD (B
 
 - **Selenium:**
   - `selenium-java`: Es la biblioteca principal para la automatización de navegadores. Proporciona una API para controlar el comportamiento de los navegadores web, permitiendo simular interacciones del usuario como hacer clic en botones, llenar formularios y navegar entre páginas.
+
+## Cómo ejecutar los tests
+
+### Ejecutar todos los tests
+
+Para ejecutar todas las pruebas del proyecto, utiliza el siguiente comando:
+
+```bash
+mvn test
+```
+
+### Ejecutar tests por tags
+
+Para ejecutar solo los tests de registro, que están marcados con el tag `@Registro`:
+
+```bash
+mvn test -Dcucumber.filter.tags="@Registro"
+```
+
+Para ejecutar solo los tests de login `@Login`:
+
+```bash
+mvn test -Dcucumber.filter.tags="@Login"
+```
