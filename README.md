@@ -21,7 +21,7 @@ Este proyecto utiliza varios paquetes de Maven para facilitar las pruebas BDD (B
 
 ### Ejecutar todos los tests
 
-Para ejecutar todas las pruebas del proyecto, utiliza el siguiente comando:
+Para ejecutar todas las pruebas del proyecto (excluye @WIP por configuración del runner), utiliza el siguiente comando:
 
 ```bash
 mvn test
@@ -29,7 +29,7 @@ mvn test
 
 ### Ejecutar tests por tags
 
-Para ejecutar solo los tests de registro, que están marcados con el tag `@Registro`:
+Para ejecutar solo los tests de registro, que están marcados con el tag `@Registro` (aunque estén en WIP debes quitar el filtro en el runner o cambiar el tag):
 
 ```bash
 mvn test -Dcucumber.filter.tags="@Registro"
@@ -40,3 +40,35 @@ Para ejecutar solo los tests de login `@Login`:
 ```bash
 mvn test -Dcucumber.filter.tags="@Login"
 ```
+
+
+## Reportes
+
+Se generan automáticamente:
+- HTML: `target/cucumber-report.html`
+- JSON: `target/cucumber-report.json`
+
+## Trazabilidad
+
+Cada escenario posee un tag con el identificador de la historia de usuario (`@HU-XXX`). Este puede mapearse en una matriz de trazabilidad externa o integrarse a un pipeline de CI/CD que procese el JSON y lo publique.
+
+## Scenario Outline
+
+### Ejecutar escenarios por funcionalidad principal
+
+Login:
+```bash
+mvn test -Dcucumber.filter.tags="@Login"
+```
+
+Registro:
+```bash
+mvn test -Dcucumber.filter.tags="@Registro"
+```
+
+CRUD:
+```bash
+mvn test -Dcucumber.filter.tags="@CRUD"
+```
+
+El archivo `login.feature` incluye un `Scenario Outline` con ejemplos que cubren casos positivos y negativos reutilizando los mismos pasos parametrizados.

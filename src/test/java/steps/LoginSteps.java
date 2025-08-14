@@ -27,6 +27,11 @@ public class LoginSteps {
         driver.get("https://the-internet.herokuapp.com/login");
     }
 
+    @Given("el usuario esta en la pagina de login")
+    public void usuarioEnLoginAlias() {
+        usuarioEnLogin();
+    }
+
     @When("ingresa {string} y {string}")
     public void ingresarCredenciales(String usuario, String pass) {
         System.out.println("Ingresando credenciales: " + usuario + " / " + pass);
@@ -57,7 +62,20 @@ public class LoginSteps {
         WebElement mensajeError = driver.findElement(By.id("flash"));
         assertTrue(mensajeError.isDisplayed());
         System.out.println("Mensaje de error: " + mensajeError.getText());
-        assertTrue(mensajeError.getText().contains("Your password is invalid"));
+        String text = mensajeError.getText();
+        assertTrue("Mensaje inesperado: " + text,
+            text.contains("Your password is invalid") || text.contains("Your username is invalid"));
+    }
+
+    @Then("{string}")
+    public void resultadoDinamico(String resultado) {
+        if ("accede a su cuenta".equalsIgnoreCase(resultado.trim())) {
+            verificarPantallaPrincipal();
+        } else if ("muestra mensaje de login fallido".equalsIgnoreCase(resultado.trim())) {
+            verificarPantallaError();
+        } else {
+            throw new IllegalArgumentException("Resultado no soportado: " + resultado);
+        }
     }
 
 }
